@@ -30,11 +30,11 @@ def classify_language(user_input):
     return response.choices[0].message.content.strip()
 
 print("Language Classifier (Type 'q' to quit)")
-print("Thai: 1, English: 2, Other: 0")
+print("English: 1, Thai: 2, Other: 0")
 while True:
     user_input = input("Enter text: ")
     if user_input.lower() == "q":
         print("Goodbye!")
         break
     response = classify_language(user_input)
-    print(response)
+    print(int(response))
