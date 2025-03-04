@@ -13,32 +13,36 @@ llm = OpenAI(
    base_url='https://api.opentyphoon.ai/v1'
 )
 
-@retry(tries=3, delay=2, backoff=2)
-def classify_language(user_input):
+@retry((ValueError, AttributeError, IndexError, Exception), tries=3, delay=2, backoff=2)
+def classify_language(user_input: str) -> int:
     response = llm.chat.completions.create(
         model="typhoon-v2-70b-instruct",
         messages=[
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            {
-                "role": "user",
-                "content": user_input
-            }
-        ]
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_input},
+        ],
     )
 
-    response = response.choices[0].message.content.strip()
+    try:
+        response = response.choices[0].message.content.strip()
+        return int(response)
+    
+    except (ValueError, AttributeError, IndexError) as error:
+        print(f"Error: {error} (Retrying...)")
+        raise
 
-    return int(response)
+    except Exception as error:
+        print(f"Unexpected error: {error}")
+        raise
 
-print("Language Classifier (Type 'q' to quit)")
-print("English: 1, Thai: 2, Other: 0")
-while True:
-    user_input = input("Enter text: ")
-    if user_input.lower() == "q":
-        print("Goodbye!")
-        break
-    response = classify_language(user_input)
-    print(response)
+if __name__ == "__main__":
+    print("Language Classifier (Type 'q' to quit)")
+    print("English: 1, Thai: 2, Other: 0")
+
+    while True:
+        user_input = input("Enter text: ")
+        if user_input.lower() == "q":
+            print("Goodbye!")
+            break
+        response = classify_language(user_input)
+        print(response)
