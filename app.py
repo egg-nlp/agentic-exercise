@@ -8,12 +8,8 @@ def interface():
         Enter a text snippet below, and we'll detect the language for you!
         """)
         
-        with gr.Row():
-            textbox = gr.Textbox(lines=2, show_label=False, placeholder="Type your text here...")
-        
-        with gr.Row():
-            button = gr.Button("🔍 Classify", variant="primary")
-        
+        textbox = gr.Textbox(lines=2, show_label=False, placeholder="Type your text here...")
+        button = gr.Button("🔍 Classify", variant="primary")
         label = gr.Label()
         
         gr.Markdown("""
