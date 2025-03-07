@@ -3,6 +3,8 @@ import duckdb
 import pandas as pd
 from openai import OpenAI
 from dotenv import load_dotenv
+from datetime import datetime
+import pytz
 
 load_dotenv()
 
@@ -12,6 +14,10 @@ llm = OpenAI(
     api_key=TYPHOON_API_KEY,
     base_url='https://api.opentyphoon.ai/v1'
 )
+
+tz_utc7 = pytz.timezone('Asia/Bangkok')
+now = datetime.now()
+current_date = now.strftime("%A, %B %d, %Y")
 
 # Load the dataset
 df = pd.read_csv("../data/promo_studio_example_data.csv")
@@ -29,6 +35,7 @@ Columns:\n\n
 {describe}\n\n
 Data Dictionary:\n\n
 {data_dic}\n\n
+Current date: {current_date}\n\n
 You must figure out the SQL query to prepare data to answer the question. Therefore, return any the answer and not include prefixes, suffixed and prologues Also, you must ensure that your SQL answer is runable on DuckDB"""
 
 def promo_query_agent(query: str) -> pd.DataFrame:
