@@ -12,12 +12,6 @@ def interface():
         button = gr.Button("🔍 Classify", variant="primary")
         label = gr.Label()
         
-        gr.Markdown("""
-        - English: `1`
-        - Thai: `2`
-        - Other: `0`
-        """)
-        
         button.click(classify_language, inputs=textbox, outputs=label)
     
     return demo
