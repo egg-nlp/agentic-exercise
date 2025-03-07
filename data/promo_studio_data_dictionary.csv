@@ -1,0 +1,24 @@
+column_name,field_name,description
+Format,DS_Subweekly'[Format_Name],"format name [Hyper, Super, Mini]"
+Promo_ID,DS_Subweekly'[COMMON_TAB_ID],"Key join, promo ID consist of SKU,"
+Promo_Name,[promo_name],
+List_of_Subclass,[list_of_subclass],"subclass hierarchy, will be a list if promo id consist of multiple SKU from multiple subclass"
+List_of_Brand,[list_of_brand],"brand hierarchy, will be a list if promo id consist of multiple SKU from multiple brand"
+Mechanic_Full_Name,DS_Subweekly[1p_mech_name_with_price],
+RSP,DS_Subweekly'[max_netprice],retail price (no discount)
+Promo_Price,DS_Subweekly'[min_promoprice],price after discount
+Promo_Start_Date,DS_Subweekly'[min_promo_start_date],start date of promotion
+Promo_End_Date,DS_Subweekly'[max_promo_end_date],end date of promotion
+Promo_Sales,ALLDAX[pro_sum_sum_promosales],promo price x units sold
+NPD_Promo_Sales,ALLDAX[pro_sum_sum_npd_promo_sales],"if promo ID is consider as NPD (new product), sales will be here"
+Base_Sales,ALLDAX[pro_sum_sum_base_sales],sales calculate from the baseline which already exclude seasonal and outlier
+Sales_Uplift,ALLDAX'[pro_sum_sum_sales_uplift],[Promo Sales] - [Base Sales]
+Sales_Uplift_Per_Day_Per_Promotion,ALLDAX'[AVG Sales Uplift Per Day Per Promotion],"[Sales Uplift] / Duration([Promo Start Date], [Promo End Date])"
+Markdown_Cost,ALLDAX'[pro_sum_sum_markdown_cost],discount price x units sold
+SCR,ALLDAX'[SCR Measure],"Sales Cost Ratio, if SCR less than 1 then lose sales more than gain"
+Overall_Rating,DS_Subweekly'[Overall Rating],"Promo Rating (Best, Good, Fair, Poor, Reject), calculate from Sales Uplift, Visit Uplift, SCR, ROI, margin"
+Sales_Uplift_Rating,DS_Subweekly'[weighted_sales_growth_rating],Sales Uplift pass or not
+Visit_Uplift_Rating,DS_Subweekly'[weighted_visits_rating],Visits Uplift pass or not
+Sales_Uplift_over_Category_Rating,DS_Subweekly'[weighted_upc_sales_vs_cat_rating],Sales Uplift compared to Category Rating pass or not
+SCR_Rating,DS_Subweekly'[weighted_roi_rating],SCR pass or not
+Margin_Rating,DS_Subweekly'[weighted_margin_rating],Maring pass or not
