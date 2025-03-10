@@ -1,5 +1,5 @@
 import gradio as gr
-from chain import process_query
+from promo_agent.flow import process_query
 
 def chat_interface(message, history):
     response = process_query(message)
