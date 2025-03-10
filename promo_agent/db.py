@@ -1,13 +1,11 @@
 import duckdb
 import pandas as pd
 
-# Define tables
 tables = ["promo_dataset", "promo_data_dic"]
 
 data_dic = ""
 describe = ""
 
-# Load and process each table
 for table in tables:
     df = pd.read_csv(f"../data/{table}.csv")
     duckdb.sql(f"CREATE TABLE {table} AS SELECT * FROM df")
